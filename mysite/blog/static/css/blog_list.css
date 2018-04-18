@@ -1,0 +1,25 @@
+ul.blog-type{
+    list-style-type: none;
+    color: #FF6347;
+}
+div.paginator{
+    text-align: center;
+}
+p.list-cecontent{
+    word-wrap: break-word;
+    text-indent: 2em;
+}
+div.panel-body p.read-more{
+    text-align: right;
+}
+
+ul.blog-type-num {
+    list-style-type: none;
+}
+ ul.blog-type-num li{
+    display: inline-block;
+    color: #FF00FF;
+}
+ul.date-classify{
+    color: #FF6347;
+}

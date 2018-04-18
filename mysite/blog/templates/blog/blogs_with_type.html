@@ -1,0 +1,11 @@
+{% extends 'blog/blog_list.html' %}
+{% block title %}{{ blog_type.type_name }}{% endblock %}
+
+
+{% block blog_list_title %}
+<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+分类: {{ blog_type.type_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+<a href="{% url 'blog_list' %}">
+查看全部博客</a>
+{% endblock %}

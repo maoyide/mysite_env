@@ -1,0 +1,22 @@
+*{  
+       margin: 0px;
+       padding: 0px; 
+
+    }
+body{
+    margin-top:100px!important;
+
+}
+
+ul{
+    list-style-type: none;
+
+}
+div.footer{
+
+    float: left;
+    margin-top: 100px;
+    width:100%;
+    height: 120px;
+    background:#B0B0B0;
+}10

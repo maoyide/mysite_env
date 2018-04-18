@@ -1,0 +1,36 @@
+ul.blog-info{
+    list-style-type: none;
+    margin-bottom: 1em;
+    
+}
+ul.blog-info li{
+    display: inline-block;
+    margin-right: 1em;
+
+}
+
+div.end-line{
+    text-align: center;
+    color: rgb(0,0,0,0.5);
+}
+div.blog-more{
+    margin-top: 3em;
+
+}
+div.blog-content{
+    word-wrap: break-word;
+    text-indent: 2em;
+}
+div.comment-area{
+    margin-top: 2em;
+}
+h3.comment-area-title{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5em;
+}
+ul.blog-info li{
+    color: #FF00FF;
+}
+div.django-ckeditor-widget{
+    width: 100%;
+}

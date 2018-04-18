@@ -1,0 +1,18 @@
+用到的一些框架版本
+
+
+admin：     user： myd    
+        password： qaz123456789
+
+
+数据库为django自带的 sqlite3  
+
+python  3.6.4
+Django  2.0.3
+bootstrap  3.3.7_____(css--bootstrap.min.css--bootstrap.min.css.map)
+                _____(fonts)
+                _____(js--bootstrap.min.js)
+jquery.min.js  1.12.4
+
+富文本编辑器   django-ckeditor 5.4.0
+python图像处理库   Pillow  5.1.0

@@ -1,0 +1,57 @@
+div.home-content{
+    margin-top: -50px;
+    height: 80px;
+    width: 100%;
+    background: #D8E6C4;
+}
+div.home-content p.head{
+    text-align: center;
+}
+
+div#container{
+
+    width: 325px;
+    height: 300px;
+
+}
+
+span.blog_list{
+    margin-left: 50px;
+    font-size: 25px;
+}
+
+div.blog_list{
+    margin-top:20px;
+}
+
+div.hot-data{
+    margin-left: 25px;
+    font-size: 15px;
+    width: 300px;
+    height: 300px;
+    float: left;
+}
+div.nav-menu{
+    float: left;
+    margin-left:30px;
+    margin-top: 2em;
+}
+div.hot-data ul{
+    font-size:16px;
+}
+div.hot-data-publish{
+    float: left;
+    margin: 35px;
+    font-size: 16px;
+}
+
+div.nav-menu-body{
+    margin: 20px;
+    height: 360px;
+}
+div.blog-type{
+    float: right;
+    margin: 35px;
+    font-size: 16px;
+
+}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+<!-- 页面标题 -->
+{% block title%}
+    网站|错误
+{% endblock%}
+
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="/static/css/error.css">
+{% endblock %}
+
+{% block nav_home_activt %}active{% endblock %}
+
+
+<!-- 页面内容 -->
+{% block content %}
+<div class="hint-error">{{ message }}<a href="{{ redirect_to }}">
+    <br>
+    返回> >&nbsp;</a>
+</div>
+{% endblock%}

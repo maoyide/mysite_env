@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    博客列表
+{% endblock%}
+
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="/static/css/blog_list.css">
+{% endblock%}
+
+{% block nav_blog_activt %}active{% endblock %}
+
+{% block content %} <!-- 页面内容 -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{% block blog_list_title %}
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
+                            &nbsp;&nbsp;博客列表{% endblock %}
+                        </div>
+                        <div class="panel-body">
+                                {% for blog in blogs %}
+                                    <h4> 
+                                        <a href="{% url 'blog_defail' blog.pk %}">
+                                        {{ blog.title|truncatechars:30}}</a>
+                                    </h4>
+                                    <ul class="blog-type-num">
+                                    <p class="blog_into">
+                                        <li> 
+                                            <span class="glyphicon glyphicon-paperclip" aria-hidden="true"> </span>
+                                            <a href="{% url 'blogs_with_type'  blog.blog_type.pk %}"> 
+                                                {{ blog.blog_type }}
+                                            </a> &nbsp;&nbsp;
+                                        </li>
+
+                                        <li> 
+                                            <span class="glyphicon glyphicon-time" aria-hidden="true"> 
+                                                </span>
+                                            {{ blog.create_time|date:"Y-m-d H:i" }} &nbsp;&nbsp;&nbsp;
+                                        </li>
+                                        <li> 
+                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                            阅读:({{ blog.get_read_num }})
+                                        </li>
+                                    </p>
+                                    </ul>
+                                    <p class="list-cecontent" >{{ blog.content|striptags|safe|truncatechars:150 }}</p>
+                                    <p class="read-more"><a  href="{% url 'blog_defail' blog.pk %}">
+                                        阅读全文 > > </a>
+                                    &nbsp;&nbsp;&nbsp;</p>
+                                    <hr>
+                                    {% empty %} 
+                                    <br><br><br>
+                                    <h3>---暂无博客，敬请期待---</h3>
+                                    <br><br><br><br>
+                                    {% endfor%}
+                        </div>   
+                    </div>
+                    <div class="paginator">
+                              <ul class="pagination">
+                                <li>
+                                    {%  if page_of_blogs.has_previous %} 
+                                        <a href="?page={{ page_of_blogs.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span></a>
+                                    {% else %}
+                                        <span aria-hidden="true">&laquo;</span></a>
+                                    {% endif %}
+
+                                </li>
+                                {# 全部页码 #}
+                                    {% for page_num in page_range %}
+                                        {% if page_num == page_of_blogs.number  %}
+                                            <li class="active"><span>{{ page_num }}</span></li>
+                                        {% else %}
+                                            {% if page_num == '...' %}
+                                                <li><span>{{ page_num }}</span></li>
+                                            {% else %}
+                                                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                            {% endif %} 
+                                        {% endif %}    
+                                    {% endfor %}
+                                {# 下一页 #}
+                                    <li>
+                                    {%  if page_of_blogs.has_next %} 
+                                        <a href="?page={{ page_of_blogs.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span></a>
+                                    {% else %}
+                                         <span aria-hidden="true">&raquo;</span></a>
+                                    {% endif %}
+
+                                    </li>
+                              </ul>
+                                <p>
+                                  一共有{{ page_of_blogs.paginator.count}}篇博客，
+                                  当前第{{ page_of_blogs.number}}页，
+                                  共{{page_of_blogs.paginator.num_pages}}页
+                                </p>
+                              
+                    </div>
+                </div>
+
+                    <div class="col-xs-3"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> &nbsp;博客分类
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="blog-type" ">
+                                        {% for blog_type in  blog_types %}
+                                            
+                                            <li> 
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>   
+                                                <a href="{% url 'blogs_with_type' blog_type.pk %}">
+                                                    {{ blog_type.type_name}}
+                                                </a>~{{ blog_type.blog_count }} 
+                                            </li>
+                                        {% empty %}
+                                            <li> -暂无分类-</li>
+                                        {% endfor %}
+                                    </ul>
+                              </div>
+                            </div>  
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+                                        日期分类 
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="date-classify">
+                                        {% for blog_date, blog_count in blog_dates.items %} 
+                                            <li>  
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>     
+                                            <a href="{% url 'blogs_with_date' blog_date.year  blog_date.month %}">
+                                                {{ blog_date|date:"Y年m月" }}</a>~{{ blog_count }}
+                                                
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                    </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+        

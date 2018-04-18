@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+<!-- 页面标题 -->
+{% block title%}
+    首页
+{% endblock%}
+
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="/static/css/home.css">  
+    
+<!--  <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script> -->
+    <script type="text/javascript" src="/static/highcharts.js"></script>
+
+{% endblock %}
+
+{% block nav_home_activt %}active{% endblock %}
+<!-- 页面内容 -->
+{% block content %}
+    <div class="home-content"><p class="head">  </p> </div>
+
+
+    <div class="blog_list">  
+         
+        <span class="blog_list">
+            <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+            博客 
+        </span>
+            <span><a href="{% url 'blog_list' %}"> 全部列表  
+                <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> 
+                </a>
+            </span>
+    </div>
+
+<div class="nav-menu-body">
+<div class="nav-menu">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#day" aria-controls="day" role="tab" data-toggle="tab">日榜</a></li>
+        <li role="presentation"><a href="#week" aria-controls="week" role="tab" data-toggle="tab">
+            周榜</a></li>
+        <li role="presentation"><a href="#month" aria-controls="month" role="tab" data-toggle="tab">
+            月榜</a></li>
+        <li role="presentation"><a href="#graph" aria-controls="graph" role="tab" data-toggle="tab">
+            阅读量</a></li>
+    </ul>
+
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+
+        <div role="tabpanel" class="tab-pane active" id="day"> 
+            <div class="hot-data">
+            <h4>日榜</h4><br>
+            <ul>
+                {% for hot_date in today_hot_data %}
+                    <li><a  href="{% url 'blog_defail'  hot_date.content_object.pk %}">
+                        {{ hot_date.content_object.title|truncatechars:11 }}
+                        </a>({{hot_date.read_num }})
+                    </li>
+                {% empty %}
+                    <li>暂无</li>
+                {% endfor %}  
+            </ul>
+            </div>   
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="week">
+            <div class="hot-data">
+                <h4>周榜</h4><br>
+                    <ul>
+                        {% for hot_date in seven_days_hot_data %}
+                            <li><a  href="{% url 'blog_defail'  hot_date.id %}">
+                                    {{ hot_date.title|truncatechars:11 }}
+                                </a>                
+                                    ({{hot_date.read_num_sum }})
+                            </li>
+                        {% empty %}
+                            <li>暂无</li>
+                        {% endfor %}  
+                    </ul>
+            </div>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="month"> 
+            <div class="hot-data">
+                <h4>月榜</h4><br>
+                    <ul>
+                        {% for hot_date in thirty_days_hot_data %}
+                            <li><a href="{% url 'blog_defail'  hot_date.id %}">
+                                    {{ hot_date.title|truncatechars:11 }}
+                                </a>           
+                                    ({{hot_date.read_num_sum }})
+                            </li>
+                        {% empty %}
+                            <li>暂无</li>
+                        {% endfor %}  
+                     </ul>
+             </div>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="graph">
+                <!-- 图表容器 DOM -->
+                <div id="container"></div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+            <div class="hot-data-publish">
+                <h4>最新发表</h4><br>
+                 <ul>
+                    {% for hot_date in new_blog %}
+                        <li><a  href="{% url 'blog_defail'  hot_date.pk %}">
+                                {{ hot_date.title|truncatechars:11 }}
+                            </a>       
+                        </li>
+                    {% empty %}
+                        <li>暂无</li>
+                    {% endfor %}
+                 </ul>
+            </div>
+
+
+            <div class="hot-data-publish">
+                <h4>最新推荐</h4><br>
+                    <ul>
+                        {% for hot_date in yesterday_hot_data %}
+                            <li><a  href="{% url 'blog_defail'  hot_date.content_object.pk %}">
+                                    {{ hot_date.content_object.title|truncatechars:11 }}
+                                </a>     
+                                  <!--   {{hot_date.read_num }}  -->
+                            </li>
+                        {% empty %}
+                            <li>暂无</li>
+                        {% endfor %}
+                    </ul>
+            </div>
+
+            <div class="blog-type">
+                <h4>博客分类 </h4><br>          
+                <ul>
+                    {% for blog_type in  blog_types %}
+                        <li> 
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>   
+                            <a href="{% url 'blogs_with_type' blog_type.pk %}">
+                            {{ blog_type.type_name}}</a>
+                            ({{ blog_type.blog_count }}) 
+                        </li>
+                    {% empty %}
+                        <li> -暂无分类-</li>
+                    {% endfor %}
+                </ul>
+  
+        
+            </div>
+</div>
+
+
+
+
+
+
+
+<script>
+        // 图表配置
+        var options = {
+            chart: { type: 'line' },          //指定图表的类型，默认是折线图（line）
+            title: { text: null },         // 标题
+            xAxis: {
+                title:    { text: '前七日阅读量变化' },
+                categories: {{ dates|safe }},   // x 轴分类
+                tickmarkPlacement: 'on',
+                },
+            yAxis: {
+                    title:    { text: null }, // y 轴标题
+                    labels:{ enabled:false },
+                    gridLineDashStyle: 'Dash'
+                },
+            series: [{                      // 数据列
+                    name: '阅读量',              // 数据列名
+                    data: {{ read_nums }}           // 数据
+               }],
+                plotOptions: {
+                    line: {
+                    dataLabels: {
+                        enabled: true
+                        }
+                    }
+                },
+            legend: { enabled:false },
+            credits: { enabled:false },
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+</script>
+  
+    
+{% endblock%}
