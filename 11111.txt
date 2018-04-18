@@ -5,9 +5,9 @@ admin：     user： myd
         password： qaz123456789
 
 
-数据库为django自带的 sqlite3  
+数据库为sqlite3  
 
-python  3.6.4
+python  3.6.5
 Django  2.0.3
 bootstrap  3.3.7_____(css--bootstrap.min.css--bootstrap.min.css.map)
                 _____(fonts)
